@@ -1,2 +1,3 @@
 # tlCommonMessaging
-for shared messaging
+
+see https://github.com/clwilliams/tlWatchFolderAggregator for details
