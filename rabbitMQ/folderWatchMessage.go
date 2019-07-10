@@ -9,7 +9,7 @@ import (
 const CreateAction = "CREATE"
 
 // DeleteAction - represents a folder deletion action
-const DeleteAction = "DELETE"
+const DeleteAction = "REMOVE"
 
 // RenameAction - represents a folder renaming action
 const RenameAction = "RENAME"
