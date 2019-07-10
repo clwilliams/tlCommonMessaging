@@ -10,6 +10,7 @@ import (
 // MessageClient - wrapper for rabbitMQ
 type MessageClient struct {
 	Connection *amqp.Connection
+	Channel    *amqp.Channel
 }
 
 // Connect - connects to the message broker
@@ -20,6 +21,21 @@ func (messageClient *MessageClient) Connect(
 		*rabbitMqUser, *rabbitMqPassword, *rabbitMqHost, *rabbitMqPort))
 	if err != nil {
 		return fmt.Errorf("Problem connecting to RabbitMQ %v", err)
+	}
+	return nil
+}
+
+// ConfigureChannelAndExchange - creates a channel and configures to given exchange
+func (messageClient *MessageClient) ConfigureChannelAndExchange(rabbitMqExchange *string) error {
+	// setup channel
+	var err error
+	messageClient.Channel, err = messageClient.Connection.Channel()
+	if err != nil {
+		return fmt.Errorf("Failed to connect to RabbitMQ Channel %v", err)
+	}
+	// setup exchange
+	if err = messageClient.Channel.ExchangeDeclare(*rabbitMqExchange, "topic", true, false, false, false, nil); err != nil {
+		return fmt.Errorf("Failed to connect to RabbitMQ Topic %v", err)
 	}
 	return nil
 }
