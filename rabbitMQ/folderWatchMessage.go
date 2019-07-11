@@ -46,14 +46,3 @@ func (msg *FolderWatchMessage) convertToJSON() (string, error) {
 	}
 	return string(jsonMsg), nil
 }
-
-// GenerateUniqueID so a folder/file with the same path
-// doesn't cause issues, ensure we prepend the ID with
-// the type
-func (msg *FolderWatchMessage) GenerateUniqueID() string {
-	typePrefix := "file"
-	if msg.IsDir == "true" {
-		typePrefix = "dir"
-	}
-	return fmt.Sprintf("%s_%s", typePrefix, msg.Path)
-}
